@@ -2,19 +2,22 @@
 <html lang="en">
   <head>
     <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">
+    <link rel="stylesheet" href="src/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Pridi" rel="stylesheet">
     <title>My First React Example</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div class="container">
+      <div id="root"></div>
+    </div>
+
     <script src="https://fb.me/react-15.0.0.js"></script>
     <script src="https://fb.me/react-dom-15.0.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/babel" src="src/imports.js"></script>
     <script type="text/babel" src="src/random-message.jsx"></script>
-    <script type="text/javascript" src="vendor/Chart.js-2.5.0/src/bundle.js"></script>
-    <script type="text/babel" src="src/mychart.js"></script>
-    <div id="mybtn"></div>
-    <div id="root"></div>
-    <canvas id="myChart" width="100" height="100"></canvas>
+    <!-- <div id="mybtn"></div>
+    <div id="root"></div> -->
   </body>
 </html>
