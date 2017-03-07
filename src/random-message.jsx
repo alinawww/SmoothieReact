@@ -70,13 +70,7 @@ class Smoothie extends React.Component {
                       <img className="smoothie__image" width="100" src={image} />
                         <h2 className="smoothie__title">{name}</h2>
                         <p className="smoothie__ingredients">
-                          <ReactCSSTransitionGroup
-                            transitionName="example"
-                            transitionEnterTimeout={500}
-                            transitionLeaveTimeout={300}>
-                            {ingredientLines}
-                          </ReactCSSTransitionGroup>
-
+                          {ingredientLines}
                         </p>
                       <Button value={this.state.randomNumber} randomNumber={this.handleRandomNumber}/>
                     </div>
