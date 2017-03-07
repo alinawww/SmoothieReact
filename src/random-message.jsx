@@ -1,5 +1,3 @@
-
-
 class Button extends React.Component {
   constructor(props) {
       super(props);
@@ -11,10 +9,23 @@ class Button extends React.Component {
   render() {
     return (
       <div>
-        <button value={this.props.randomNumber} onClick={this.handleClick}>Give me random smoothie</button>
+        <button className="smoothie__button" value={this.props.randomNumber} onClick={this.handleClick}>Give me random smoothie</button>
       </div>
     );
   }
+}
+
+class IngredientLine extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <span className="smoothie__ingredient">
+                {this.props.ingredientText}
+            </span>
+        )
+    }
 }
 
 class Smoothie extends React.Component {
@@ -37,114 +48,36 @@ class Smoothie extends React.Component {
             const smoothieRecipe = selectedSmoothie.recipe
             const name = smoothieRecipe.label;
             const image = smoothieRecipe.image;
-            const ingredients = smoothieRecipe.ingredientLines;
+            const ingredients = smoothieRecipe.ingredients;
             const calories = smoothieRecipe.calories;
             const cautions = smoothieRecipe.cautions;
             console.log(smoothieRecipe);
             const nutrients = smoothieRecipe.totalNutrients;
             const smoothieWeight = smoothieRecipe.totalWeight * 1000;
-            let digestLabels = [];
-            let digestLabelsValues = [];
-            for (var nutrientKey in nutrients) {
-              if (nutrients.hasOwnProperty(nutrientKey)) {
-                const nutrient = nutrients[nutrientKey];
-                console.log(nutrient);
-                digestLabels.push(nutrient.label)
-                let amount = nutrient.quantity;
-                if (nutrient.unit == "µg") {
-                    amount = nutrient.quantity * 1000;
-                }
-                if (nutrient.unit == "g") {
-                    amount = nutrient.quantity / 1000;
-                }
 
-                let howMuchOfDailyNecessary = amount * 100 / smoothieWeight;
-                // console.log(Math.floor(howMuchOfDailyNecessary));
-                if (true) {
-
-                }
-                digestLabelsValues.push(howMuchOfDailyNecessary)
-
-              }
-
-
-            }
-
-
-            var data = {
-                labels: digestLabels,
-                datasets: [
-                    {
-                        data: digestLabelsValues,
-                        backgroundColor: [
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56",
-                            "#FF5733",
-                            "#FFDA33",
-                            "#DDFF33",
-                            "#8AFF33",
-                            "#3633FF",
-                            "#FF33B8",
-                            "#3C33FF",
-                            "#33FF8A",
-                            "#22A058",
-                            "#23623E",
-                            "#CED854",
-                            "#54D862",
-                            "#54D8D8",
-                            "#A454D8",
-                            "#54B4D8",
-                            "#D8548A",
-                            "#927A84",
-                            "#000000"
-
-                        ],
-                        hoverBackgroundColor: [
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56",
-                            "#FF5733",
-                            "#FFDA33",
-                            "#DDFF33",
-                            "#8AFF33",
-                            "#3633FF",
-                            "#FF33B8",
-                            "#3C33FF",
-                            "#33FF8A",
-                            "#22A058",
-                            "#23623E",
-                            "#CED854",
-                            "#54D862",
-                            "#54D8D8",
-                            "#A454D8",
-                            "#54B4D8",
-                            "#D8548A",
-                            "#927A84",
-                            "#000000"
-                        ]
-                    }]
-            };
-            var ctx = document.getElementById("myChart");
-            var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: data,
-                options: {
-                    animation:{
-                        animateScale:false
-                    }
-                }
-            });
             let shouldBeShown;
             if ( typeof name !== undefined && typeof image !== undefined) {
                 shouldBeShown = true;
             }
             if (shouldBeShown) {
+                let ingredientLines = [];
+                {ingredients.forEach(function(ingredient, index) {
+                    // <IngredientLine ingredientText={ingredient.text} />
+                    ingredientLines.push(<IngredientLine ingredientText={ingredient.text} key={index}/>)
+                })}
                 return (
                     <div>
-                      <img width="100" src={image} />
-                        <p>{name}</p>
-                        <p>{ingredients}</p>
+                      <img className="smoothie__image" width="100" src={image} />
+                        <h2 className="smoothie__title">{name}</h2>
+                        <p className="smoothie__ingredients">
+                          <ReactCSSTransitionGroup
+                            transitionName="example"
+                            transitionEnterTimeout={500}
+                            transitionLeaveTimeout={300}>
+                            {ingredientLines}
+                          </ReactCSSTransitionGroup>
+
+                        </p>
                       <Button value={this.state.randomNumber} randomNumber={this.handleRandomNumber}/>
                     </div>
                 );
@@ -188,7 +121,7 @@ var App = React.createClass({
     }
     else {
       return (
-        <div>
+        <div className="smoothie">
           <Smoothie smoothies={this.state.smoothies} />
         </div>
       )
